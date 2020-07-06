@@ -10,12 +10,15 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 import org.json.JSONTokener;
 
+import android.net.Uri;
+import android.os.Build;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 
 public class AppPreferences extends CordovaPlugin implements OnSharedPreferenceChangeListener {
@@ -91,6 +94,8 @@ public class AppPreferences extends CordovaPlugin implements OnSharedPreferenceC
 
 		if (action.equals ("show")) {
 			return this.showPreferencesActivity(callbackContext);
+		} else if (action.equals ("showNotificationSettings")) {
+	    	return this.showNotificationSettings(callbackContext);
 		} else if (action.equals("clearAll")) {
 			return this.clearAll(sharedPrefs, callbackContext);
 		} else if (action.equals("watch")) {
@@ -177,7 +182,7 @@ public class AppPreferences extends CordovaPlugin implements OnSharedPreferenceC
 	}
 	*/
 
-	private boolean showPreferencesActivity (final CallbackContext callbackContext) {
+	private boolean showPreferencesActivity(final CallbackContext callbackContext) {
 		cordova.getThreadPool().execute(new Runnable() {public void run() {
 			Class preferenceActivity;
 			try {
@@ -196,6 +201,34 @@ public class AppPreferences extends CordovaPlugin implements OnSharedPreferenceC
 		}});
 		return true;
 	}
+
+  private boolean showNotificationSettings(final CallbackContext callbackContext) {
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        try {
+          Context context = cordova.getContext();
+          Intent intent = new Intent();
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+          } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", context.getPackageName());
+            intent.putExtra("app_uid", context.getApplicationInfo().uid);
+          } else {
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + context.getPackageName()));
+          }
+          context.startActivity(intent);
+        } catch (Exception e) {
+          callbackContext.error("Unable to open settings");
+          e.printStackTrace();
+        }
+      }
+    });
+    return true;
+  }
 
 	private boolean fetchValueByKey(final SharedPreferences sharedPrefs, final String key, final CallbackContext callbackContext) {
 		cordova.getThreadPool().execute(new Runnable() {public void run() {

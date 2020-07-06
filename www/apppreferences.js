@@ -294,6 +294,24 @@ successCallback, errorCallback
 	}
 };
 
+AppPreferences.prototype.showNotificationSettings = platform.showNotificationSettings || function (
+	successCallback, errorCallback
+	) {
+	
+		var argCount = 0;
+		var promise = promiseCheck.apply (this, [argCount].concat ([].slice.call(arguments)));
+	
+		var nativeExec = function (resolve, reject) {
+			return platform.nativeExec (resolve, reject, "AppPreferences", "showNotificationSettings", []);
+		}
+	
+		if (promise) {
+			return new promiseLib (nativeExec);
+		} else {
+			nativeExec (successCallback, errorCallback);
+		}
+	};
+
 /**
  * Watch for preferences change
  *

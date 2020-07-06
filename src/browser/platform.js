@@ -96,6 +96,13 @@ AppPreferencesLocalStorage.prototype.show = function (successCallback, errorCall
 	errorCallback ('not implemented');
 };
 
+AppPreferencesLocalStorage.prototype.showNotificationSettings = function (successCallback, errorCallback) {
+
+	var self = this;
+
+	errorCallback ('not implemented');
+};
+
 AppPreferencesLocalStorage.prototype.watch = function (successCallback, errorCallback, watchChanges) {
 	// http://dev.w3.org/html5/webstorage/#localStorageEvent
 	// http://stackoverflow.com/questions/4671852/how-to-bind-to-localstorage-change-event-using-jquery-for-all-browsers

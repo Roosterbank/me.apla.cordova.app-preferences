@@ -20,6 +20,7 @@
 - (void)remove:(CDVInvokedUrlCommand*)command;
 - (void)clearAll:(CDVInvokedUrlCommand*)command;
 - (void)show:(CDVInvokedUrlCommand*)command;
+- (void)showNotificationSettings:(CDVInvokedUrlCommand*)command;
 - (void)store:(CDVInvokedUrlCommand*)command;
 - (NSString*)getSettingFromBundle:(NSString*)settingsName;
 
