@@ -19,32 +19,12 @@ module.exports = function (context) {
 
 	// Check the currente platform version and map the path of resources
 	function getResPath(){
-		return cordova_util
-				.getInstalledPlatformsWithVersions(context.opts.projectRoot)
-				.then(function(platformMap){
-					if ( typeof platformMap == 'object' && platformMap.android ){
-						var majorVersion = parseInt( platformMap.android[0] );
-						if ( majorVersion != NaN && majorVersion >= 7 ){
-							return path.join('platforms','android','app','src','main','res');
-						}
-					}
-					return path.join('platforms','android','res');
-				});
+		return path.join('platforms','android','app','src','main','res');
 	}
 
 	// Check the currente platform version and map the path of Java
 	function getJavaPath(){
-		return cordova_util
-				.getInstalledPlatformsWithVersions(context.opts.projectRoot)
-				.then(function(platformMap){
-					if ( typeof platformMap == 'object' && platformMap.android ){
-						var majorVersion = parseInt( platformMap.android[0] );
-						if ( majorVersion != NaN && majorVersion >= 7 ){
-							return path.join('platforms','android','app','src','main','java');
-						}
-					}
-					return path.join('platforms','android','src');
-				});
+		return path.join('platforms','android','app','src','main','java');
 	}
 
 	function mapConfig(config) {
