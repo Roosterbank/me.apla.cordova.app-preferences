@@ -191,7 +191,7 @@
 
 		} @catch (NSException * e) {
 
-			result = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT messageAsString:[e reason]];
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[e reason]];
 
 		} @finally {
 
@@ -240,7 +240,7 @@
 
 	} @catch (NSException * e) {
 
-		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT messageAsString:[e reason]];
+		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[e reason]];
 
 	} @finally {
 
@@ -290,7 +290,7 @@
 
 	} @catch (NSException * e) {
 
-		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT messageAsString:[e reason]];
+		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[e reason]];
 
 	} @finally {
 
@@ -392,7 +392,7 @@
 
 	} @catch (NSException * e) {
 
-		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT messageAsString:[e reason]];
+		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[e reason]];
 
 	} @finally {
 
