@@ -298,7 +298,7 @@ public class AppPreferences extends CordovaPlugin implements OnSharedPreferenceC
 					}
 				}
 			} else {
-				callbackContext.sendPluginResult(new PluginResult (PluginResult.Status.NO_RESULT));
+                callbackContext.success();
 			}
 
 		}});
